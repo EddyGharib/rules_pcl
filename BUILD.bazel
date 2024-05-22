@@ -1,0 +1,7 @@
+config_setting(
+    name = "__pcl_linux-aarch64",
+    constraint_values = [
+        "@platforms//os:linux",
+        "@platforms//cpu:aarch64",
+    ],
+)

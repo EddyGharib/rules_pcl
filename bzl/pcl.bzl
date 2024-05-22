@@ -32,6 +32,13 @@ def _compiler_config_value(value, kwargs):
     })
     return kwargs.pop(value, default_architecture_value)
 
+def architectue_based_flag(value):
+    # NOTE: __pcl_linux-aarch64 is defined in the top level build.
+    return select({
+        "@rules_pcl//:__pcl_linux-aarch64": _PCL_AARCH64_COMPILER_CONFIG[value],
+        "//conditions:default": _PCL_DEFAULT_COMPILER_CONFIG[value],
+    })
+
 def _cmakedefine_substitutions(*args):
     substitutions = {}
     for (cmakedefine_str, enabled) in args:

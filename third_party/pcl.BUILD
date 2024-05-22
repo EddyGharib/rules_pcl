@@ -1,13 +1,21 @@
 # Description:
 #   Point Cloud Library (PCL) pointclouds.org
 
-load("@rules_pcl//bzl:pcl.bzl", "pcl_library", "gen_pcl_config")
+load("@rules_pcl//bzl:pcl.bzl", "pcl_library", "gen_pcl_config", "architectue_based_flag")
 licenses(["notice"])  # BSD 3-Clause
 
 exports_files(["pcl_config.h.in"])
 
 gen_pcl_config(
     name = "pcl_config_hdr",
+    have_posix_memalign = architectue_based_flag("have_posix_memalign"),
+    have_mm_malloc = architectue_based_flag("have_mm_malloc"),
+    have_sse4_2_extensions = architectue_based_flag("have_sse4_2_extensions"),
+    have_sse4_1_extensions = architectue_based_flag("have_sse4_1_extensions"),
+    have_ssse3_extensions = architectue_based_flag("have_ssse3_extensions"),
+    have_sse3_extensions = architectue_based_flag("have_sse3_extensions"),
+    have_sse2_extensions = architectue_based_flag("have_sse2_extensions"),
+    have_sse_extensions = architectue_based_flag("have_sse_extensions"),
 )
 
 pcl_library(
