@@ -1,11 +1,14 @@
 # Description:
 #   Point Cloud Library (PCL) pointclouds.org
 
-load("@rules_pcl//bzl:pcl.bzl", "pcl_library")
-
+load("@rules_pcl//bzl:pcl.bzl", "pcl_library", "gen_pcl_config")
 licenses(["notice"])  # BSD 3-Clause
 
 exports_files(["pcl_config.h.in"])
+
+gen_pcl_config(
+    name = "pcl_config_hdr",
+)
 
 pcl_library(
     name = "2d",
@@ -19,7 +22,7 @@ pcl_library(
 pcl_library(
     name = "common",
     deps = [
-        "@//:pcl_config",
+        ":pcl_config_hdr",
         "@boost//:algorithm",
         "@boost//:current_function",
         "@boost//:filesystem",
@@ -55,7 +58,7 @@ pcl_library(
         ":octree",
         ":sample_consensus",
         ":search",
-        "@//:pcl_config",
+        ":pcl_config_hdr",
         "@boost//:dynamic_bitset",
         "@boost//:fusion",
         "@boost//:mpl",
@@ -184,7 +187,7 @@ pcl_library(
     deps = [
         ":common",
         ":octree",
-        "@//:pcl_config",
+        ":pcl_config_hdr",
         "@boost//:algorithm",
         "@boost//:array",
         "@boost//:asio",
@@ -227,7 +230,7 @@ pcl_library(
         ":filters",
         ":octree",
         ":search",
-        "@//:pcl_config",
+        ":pcl_config_hdr",
         "@eigen",
     ],
 )
@@ -354,7 +357,7 @@ pcl_library(
     deps = [
         ":common",
         ":search",
-        "@//:pcl_config",
+        ":pcl_config_hdr",
         "@boost//:math",
         "@boost//:multiprecision",  # See: https://github.com/kgreenek/rules_pcl/issues/4
         "@boost//:random",
@@ -419,7 +422,7 @@ pcl_library(
         ":kdtree",
         ":octree",
         ":search",
-        "@//:pcl_config",
+        ":pcl_config_hdr",
         "@boost//:current_function",
         "@boost//:dynamic_bitset",
         "@eigen",
@@ -469,7 +472,7 @@ pcl_library(
 #        ":kdtree",
 #        ":registration",
 #        ":search",
-#        "@//:pcl_config",
+#        ":pcl_config_hdr",
 #        "@boost//:algorithm",
 #        "@boost//:foreach",
 #        "@boost//:filesystem",

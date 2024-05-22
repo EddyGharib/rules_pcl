@@ -1,3 +1,5 @@
+load("@bazel_skylib//lib:paths.bzl", "paths")
+
 _PCL_CONFIG_H_TEMPLATE = "@pcl//:pcl_config.h.in"
 
 _PCL_AARCH64_COMPILER_CONFIG = {
@@ -124,6 +126,13 @@ def _gen_pcl_config_impl(ctx):
         output = ctx.outputs.pcl_config_hdr,
     )
 
+    return [
+        CcInfo(compilation_context=cc_common.create_compilation_context(
+            includes=depset([paths.dirname(ctx.outputs.pcl_config_hdr.dirname)]),
+            headers=depset([ctx.outputs.pcl_config_hdr])
+        ))
+    ]
+
 gen_pcl_config = rule(
     implementation = _gen_pcl_config_impl,
     attrs = {
@@ -149,7 +158,7 @@ gen_pcl_config = rule(
             allow_single_file = True,
         ),
     },
-    outputs = {"pcl_config_hdr": "pcl_config.h"},
+    outputs = {"pcl_config_hdr": "pcl/pcl_config.h"},
 )
 
 def pcl_library(name, **kwargs):
